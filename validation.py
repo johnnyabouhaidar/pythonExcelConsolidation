@@ -24,4 +24,7 @@ for fileObj in os.listdir(inputFolder):
     for cell in cells_to_check:
         print(ws1[cell].value)
 
+def chech_file_if_valid():
+    pass
+
 
