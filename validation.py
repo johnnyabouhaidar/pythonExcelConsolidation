@@ -1,10 +1,11 @@
 import os
+import time
 import pandas as pd
 from openpyxl import load_workbook
 
 
 
-inputFolder = "validation_folder_input"
+inputFile = "validation_folder_input\M1_IBS_ItemNames.xlsx"
 sheetname="Sheet1"
 
 referenceExcelFile = "valid\\newBM.xlsx"
@@ -37,7 +38,7 @@ def get_cell_value(initial_cell_val,data_frame):
     return returned_value    
 
 def check_file_if_valid(filename):
-    wb_filetoVerify = load_workbook(filename)
+    wb_filetoVerify = load_workbook(filename)#,data_only=True)
     ws_toverify = wb_filetoVerify[sheetname]
     bmDF = load_bm_file()
     
@@ -45,10 +46,16 @@ def check_file_if_valid(filename):
         value_toWrite = get_cell_value(ws_toverify[cell].value,bmDF)
         if value_toWrite !="empty":
             ws_toverify[cell] = value_toWrite
-            wb_filetoVerify.save(filename)
+            wb_filetoVerify.save("tmptmptmp.xlsx")
+    
+    wb_modified = load_workbook("tmptmptmp.xlsx",data_only=True)
+    ws_modified = wb_modified[sheetname]
+    for finalcells in final_cells_to_check:
+        print(ws_modified[finalcells].value)
+
 
 
 if __name__ == '__main__':
-    check_file_if_valid("validation_folder_input\M1_IBS_ItemNames.xlsx")
+    check_file_if_valid(inputFile)
 
 
