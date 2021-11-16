@@ -1,5 +1,3 @@
-import os
-import time
 import pandas as pd
 from openpyxl import load_workbook
 
@@ -46,12 +44,14 @@ def check_file_if_valid(filename):
         value_toWrite = get_cell_value(ws_toverify[cell].value,bmDF)
         if value_toWrite !="empty":
             ws_toverify[cell] = value_toWrite
-            wb_filetoVerify.save("tmptmptmp.xlsx")
-    
-    wb_modified = load_workbook("tmptmptmp.xlsx",data_only=True)
-    ws_modified = wb_modified[sheetname]
-    for finalcells in final_cells_to_check:
-        print(ws_modified[finalcells].value)
+        
+    wb_filetoVerify.save("tmptmptmp.xlsx")
+     
+
+    #wb_modified = load_workbook("tmptmptmp.xlsx",data_only=True)
+    #ws_modified = wb_modified[sheetname]
+    #for finalcells in final_cells_to_check:
+    #    print(ws_modified[finalcells].value)
 
 
 
