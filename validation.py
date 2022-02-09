@@ -19,6 +19,35 @@ final_cells_to_check =  ["E11","F11","G11","H11",
                          "E15","F15","G15","H15",
                          "E33","F33","G33","H33",]      
 
+IBS_mapping_cells = [
+                    ['C12','Claims_Total','F17'],
+                    ['D12','Claims_Total','D17'],
+                    ['E12','Claims_Total','E17'],
+                    ['C15','Claims_Total','F16'],
+                    ['D15','Claims_Total','D16'],
+                    ['E15','Claims_Total','E16'],
+                    ['C16','Claims_Total','F18'],
+                    ['D16','Claims_Total','D18'],
+                    ['E16','Claims_Total','E18'],
+                    
+                    ['C31','Lbt_Total','F17'],
+                    ['D31','Lbt_Total','D17'],
+                    ['E31','Lbt_Total','E17'],
+                    ['C34','Lbt_Total','F16'],
+                    ['D34','Lbt_Total','D16'],
+                    ['E34','Lbt_Total','E16'],
+                    ['C35','Lbt_Total','F18'],
+                    ['D35','Lbt_Total','D18'],
+                    ['E35','Lbt_Total','E18'],
+]
+
+inputTemp = "validation_folder_input\\validation_for_IBS.xlsx"
+
+def add_IBS_cells_From_LBSR(filename):
+    wb = load_workbook(filename)
+    ws = wb['IBS']
+    ws['C12']="johnny"
+    wb.save(filename)
 
 
 def load_bm_file():
@@ -56,6 +85,7 @@ def check_file_if_valid(filename):
 
 
 if __name__ == '__main__':
-    check_file_if_valid(inputFile)
+    #check_file_if_valid(inputFile)
+    add_IBS_cells_From_LBSR(inputTemp)
 
 
