@@ -9,11 +9,11 @@ sheetname="Sheet1"
 referenceExcelFile = "valid\\newBM.xlsx"
 bm_sheetname="Sheet1"
 
-cells_to_check=["E9","F9","G9","H9",
-                "E12","F12","G12","H12",
-                "E13","F13","G13","H13",
-                "E29","F29","G29","H29",
-                "E31","F31","G31","H31",]
+cells_to_check=["E13","F13","G13","H13",
+                "E16","F16","G16","H16",
+                "E17","F17","G17","H17",
+                "E33","F33","G33","H33",
+                "E35","F35","G35","H35",]
 
 final_cells_to_check =  ["E11","F11","G11","H11",
                          "E15","F15","G15","H15",
@@ -41,13 +41,9 @@ IBS_mapping_cells = [
                     ['E35','Lbt_Total','E18'],
 ]
 
-inputTemp = "validation_folder_input\\validation_for_IBS.xlsx"
+validationtemplate = "validation_folder_input\\validation_for_IBS.xlsx"
+lbsr_path = "validation_folder_input\\LBSR.xlsx"
 
-def add_IBS_cells_From_LBSR(filename):
-    wb = load_workbook(filename)
-    ws = wb['IBS']
-    ws['C12']="johnny"
-    wb.save(filename)
 
 
 def load_bm_file():
@@ -64,17 +60,27 @@ def get_cell_value(initial_cell_val,data_frame):
 
     return returned_value    
 
-def check_file_if_valid(filename):
-    wb_filetoVerify = load_workbook(filename)#,data_only=True)
-    ws_toverify = wb_filetoVerify[sheetname]
+def check_file_if_valid(lbsr,validationtemplate):
+    wb_filetoVerify = load_workbook(lbsr,data_only=True)
+    
+    wb_validation_template = load_workbook(validationtemplate)
+    ws_validationIBS = wb_validation_template["IBS"]
+    
+    for item in IBS_mapping_cells:
+        ws_filetoverfiy = wb_filetoVerify[item[1]]
+        ws_validationIBS[item[0]]=ws_filetoverfiy[item[2]].value
+    
+    ws_validationIBS = wb_validation_template["M1 domestic "]
     bmDF = load_bm_file()
     
     for cell in cells_to_check:
-        value_toWrite = get_cell_value(ws_toverify[cell].value,bmDF)
+        value_toWrite = get_cell_value(ws_validationIBS[cell].value,bmDF)
         if value_toWrite !="empty":
-            ws_toverify[cell] = value_toWrite
-        
-    wb_filetoVerify.save("tmptmptmp.xlsx")
+            ws_validationIBS[cell] = value_toWrite
+
+
+
+    wb_validation_template.save("tmptmptmp.xlsx")
      
 
     #wb_modified = load_workbook("tmptmptmp.xlsx",data_only=True)
@@ -85,7 +91,6 @@ def check_file_if_valid(filename):
 
 
 if __name__ == '__main__':
-    #check_file_if_valid(inputFile)
-    add_IBS_cells_From_LBSR(inputTemp)
+    check_file_if_valid(lbsr_path,validationtemplate)
 
 
