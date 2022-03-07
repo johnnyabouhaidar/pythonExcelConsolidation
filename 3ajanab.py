@@ -28,6 +28,9 @@ writer = pd.ExcelWriter(os.path.join(output_folder,"outPut_Consolidated.xlsx"),e
 writer.book=book
 writer.sheets = dict((ws.title,ws) for ws in book.worksheets)
 
+main_sheetname ="MAIN"
+quarternameDF= pd.DataFrame({'Q1'})
+banknameDF = pd.DataFrame({'bankname'})
 
 print("Workbooks loading")
 for file in os.listdir(inputFolder):
@@ -57,6 +60,8 @@ for sheet in sheetslist:
         newrange[3] = pd.DataFrame()        
 
 
+quarternameDF.to_excel(writer,main_sheetname,startrow=9,startcol=5,header=False,index=False)
+banknameDF.to_excel(writer,main_sheetname,startrow=11,startcol=5,header=False,index=False)
 
 #get data and consolidate
 '''
